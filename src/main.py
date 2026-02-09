@@ -1,8 +1,9 @@
-import utils
 import pygame
 
-from maze import Maze
-from agent import QLearningAgent
+import src.utils as utils
+
+from src.maze import Maze
+from src.agent import QLearningAgent
 
 def run(max_episodes=0, save_progress=False, path_saved=None, show_results=False, render=True):
     WIDTH, HEIGHT = 1000, 800
