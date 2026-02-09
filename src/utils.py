@@ -2,7 +2,7 @@ import pygame
 import numpy as np
 import matplotlib.pyplot as plt
 
-from maze import Maze
+from src.maze import Maze
 
 def draw_color_map(surface: pygame.Surface, maze: Maze, state, table) -> None:
     row, col = state
