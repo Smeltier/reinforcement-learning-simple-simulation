@@ -46,4 +46,4 @@ class QLearningAgent(BaseAgent):
         try:
             self._q_table = np.load(file_name)
         except FileNotFoundError:
-            print("Arquivo não encontrado. Iniciando com a tabela de zeros")
+            print("Arquivo não encontrado.")
