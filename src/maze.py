@@ -17,21 +17,22 @@ class Maze:
         self._start_position = self._find_item(self.START)
         self._agent_position = self._start_position
 
-    def step(self, action: int) -> tuple[tuple[int, int], int, bool]:
-        row, col = self._agent_position
+    def get_reward(self, state:tuple[int,int]) -> float:
+        if self.is_target(*state):
+            return 100.0
+        if self.is_wall(*state):
+            return -10.0
+        return -1.0
+
+    def predict_next_state(self, state:tuple[int,int], action:int) -> tuple[int,int]:
+        row, col = state
         delta_row, delta_col = [(-1, 0), (1, 0), (0, -1), (0, 1)][action]
+        nrow, ncol = row + delta_row, col + delta_col
 
-        new_row, new_col = row + delta_row, col + delta_col
+        if not self.is_on_limits(nrow, ncol) or self.is_wall(nrow, ncol):
+            return (row, col)
 
-        if not (0 <= new_row < self._rows and 0 <= new_col < self._cols) or self.is_wall(new_row, new_col):
-            return (row, col), -10, False
-        
-        self._agent_position = (new_row, new_col)
-
-        if self._matrix[new_row][new_col] == self.TARGET:
-            return (new_row, new_col), 100, True
-        
-        return (new_row, new_col), -1, False # !
+        return (nrow, ncol)
 
     def reset(self) -> tuple[int, int]:
         valid_slots: list[tuple[int, int]] = []
@@ -116,3 +117,11 @@ class Maze:
                     return (row, col)
                 
         return (0,0)
+    
+    def _find_all_targets(self) -> list[tuple[int, int]]:
+        targets = []
+        for row in range(self._rows):
+            for col in range(self._cols):
+                if self._matrix[row][col] == self.TARGET:
+                    targets.append((row, col))
+        return targets
