@@ -60,7 +60,7 @@ class ApproximateQLearningAgent(BaseAgent):
         self._weights += self._alpha * (target - old_q) * features
 
     def save_model(self, file_name: str) -> None:
-        np.save_model(file_name, self._weights) # # pyright: ignore
+        np.save(file_name, self._weights)
 
     def load_model(self, file_name: str) -> None:
         try:
