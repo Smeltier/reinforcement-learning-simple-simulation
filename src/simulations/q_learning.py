@@ -91,7 +91,7 @@ def run(max_episodes=0, save_progress=False, path_saved=None, show_results=False
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Approximate Q-learning Simulataion")
 
-    parser.add_argument('--episodes', type=int, default=1)
+    parser.add_argument('--episodes', type=int, default=0)
     parser.add_argument('--save', action='store_true')
     parser.add_argument('--load', type=str, default=None)
     parser.add_argument('--results', action='store_true')
