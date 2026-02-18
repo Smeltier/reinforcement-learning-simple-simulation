@@ -15,7 +15,7 @@ def run(max_episodes=0, save_progress=False, path_saved=None, show_results=False
         SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
         CLOCK = pygame.time.Clock()
 
-    maze = Maze('playground.txt')
+    maze = Maze('data/playground.txt')
     agent = ApproximateQLearningAgent(3, 4)
 
     if path_saved is not None:
@@ -51,9 +51,6 @@ def run(max_episodes=0, save_progress=False, path_saved=None, show_results=False
         next_state, reward, done = agent.update(state, action, maze)
 
         total_reward += reward
-
-        agent.learn(state, action, reward, next_state, done, maze)
-        # agent.log_step(state, action, reward)
 
         state = next_state
         maze._agent_position = next_state

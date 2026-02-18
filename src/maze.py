@@ -11,6 +11,7 @@ class Maze:
     EMPTY, WALL, START, TARGET = 0, 1, 2, 3
 
     def __init__(self, maze_path: str) -> None:
+        self._maze_path = maze_path
         self._matrix = self._load_matrix(maze_path)
         self._rows = len(self._matrix)
         self._cols = len(self._matrix[0])
@@ -35,6 +36,8 @@ class Maze:
         return (nrow, ncol)
 
     def reset(self) -> tuple[int, int]:
+        self._matrix = self._load_matrix(self._maze_path)
+
         valid_slots: list[tuple[int, int]] = []
         
         for row in range(self._rows):

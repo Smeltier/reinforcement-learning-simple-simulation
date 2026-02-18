@@ -11,10 +11,15 @@ class ApproximateQLearningAgent(BaseAgent):
     def update(self, state, action, maze) -> tuple[tuple[int, int], float, bool]:
         next_state = maze.predict_next_state(state, action)
         reward = maze.get_reward(next_state)
-        done = maze.is_target(*next_state)
+
+        if maze.is_target(*next_state):
+            row, col = next_state
+            maze._matrix[row][col] = 0
+
+        targets = maze._find_all_targets()
+        done = len(targets) == 0
 
         self.learn(state, action, reward, next_state, done, maze)
-
         return next_state, reward, done
 
     def get_features(self, state: tuple[int, int], action: int, maze) -> np.ndarray:
