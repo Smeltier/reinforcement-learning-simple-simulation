@@ -1,3 +1,5 @@
+import argparse
+
 import pygame
 
 import src.utils as utils
@@ -6,6 +8,9 @@ from src.maze import Maze
 from src.agents.approximate_q_learning_agent import ApproximateQLearningAgent
 
 def run(max_episodes=0, save_progress=False, path_saved=None, show_results=False, render=True):
+    pygame.init()
+    pygame.display.set_caption("Approximate Q-learning Simulation")
+
     WIDTH, HEIGHT = 1000, 800
     SCREEN = None
     CLOCK = None
@@ -84,9 +89,24 @@ def run(max_episodes=0, save_progress=False, path_saved=None, show_results=False
     if show_results:
         utils.show_rewards_graph(history)
 
-    return 
+    pygame.quit()
 
 if __name__ == '__main__':
-    pygame.init()
-    pygame.display.set_caption('Q-Learning Simulation')
-    run()
+    parser = argparse.ArgumentParser(description="Approximate Q-learning Simulataion")
+
+    parser.add_argument('--episodes', type=int, default=1)
+    parser.add_argument('--save', action='store_true')
+    parser.add_argument('--load', type=str, default=None)
+    parser.add_argument('--results', action='store_true')
+    parser.add_argument('--no-render', action='store_false', dest='render')
+    parser.set_defaults(render=True)
+
+    args = parser.parse_args()
+    
+    run(
+        max_episodes=args.episodes,
+        save_progress=args.save,
+        path_saved=args.load,
+        show_results=args.results,
+        render=args.render
+    )
